@@ -18,3 +18,8 @@ VALUES (1, 'P', 'E', 800),
        (7, 'C', 'E', 100),
        (8, 'C', 'R', 200),
        (9, 'C', 'L', 300);
+
+INSERT INTO person (id, name, location, birth_date)
+VALUES (10001, 'Michael', 'Frankfurt', sysdate()),
+       (10002, 'Philipp', 'Offenbach', sysdate())
+       (10003, 'David', 'Munich', sysdate());
