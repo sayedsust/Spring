@@ -1,5 +1,9 @@
 package com.pluralsight.demo.jdbc;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -16,6 +20,10 @@ public class Person {
     private String name;
     private String location;
     private Date birthDate;
+    @CreationTimestamp
+    private LocalDateTime created_time;
+    @UpdateTimestamp
+    private LocalDateTime updated_time;
 
     public Person() {
 

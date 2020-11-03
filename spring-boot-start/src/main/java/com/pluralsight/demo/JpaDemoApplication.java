@@ -27,17 +27,19 @@ public class JpaDemoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		logger.info("JpaDemoApplication User id 10001 -> {}", repository.findById(10001));
+		logger.info("Find a User with id 10001 -> {}", repository.findById(10001));
 
-		logger.info("JpaDemoApplication Inserting -> {}",
+		logger.info("Inserting a user -> {}",
 				repository.insert(new Person("Tara", "Berlin", new Date())));
 
-		logger.info("JpaDemoApplication Update 10002 -> {}",
+		logger.info("Update a user 10002 -> {}",
 				repository.update(new Person(10002, "Pieter", "Utrecht", new Date())));
 
 		repository.deleteById(10002);
 
-		logger.info("All users -> {}", repository.findAll());
+		logger.info("All users with NativeQuery-> {}", repository.findAllWithNativeQuery());
+
+		logger.info("Find a users with NativeQuery -> {}", repository.findAllWithNativeQueryId("Tara"));
 
 	}
 }

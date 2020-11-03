@@ -2,6 +2,7 @@ package com.pluralsight.demo.database;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import javax.persistence.TypedQuery;
 
@@ -20,6 +21,17 @@ public class PersonJpaRepository {
 	public List<Person> findAll() {
 		TypedQuery<Person> namedQuery = entityManager.createNamedQuery("find_all_persons", Person.class);
 		return namedQuery.getResultList();
+	}
+
+	public List<Person> findAllWithNativeQuery() {
+		Query query = entityManager.createNativeQuery("SELECT * from person",Person.class);
+		return query.getResultList();
+	}
+
+	public List<Person> findAllWithNativeQueryId(String name) {
+		Query query = entityManager.createNativeQuery("SELECT * from person where name = :name",Person.class);
+		query.setParameter("name",name);
+		return query.getResultList();
 	}
 
 	public Person findById(int id) {

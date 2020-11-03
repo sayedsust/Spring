@@ -64,6 +64,8 @@ CREATE TABLE person
    name         varchar(255) not null,
    location     varchar(255),
    birth_date   timestamp,
+   created_time timestamp,
+   updated_time timestamp,
    primary key(id)
 );
 
