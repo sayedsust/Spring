@@ -21,5 +21,5 @@ VALUES (1, 'P', 'E', 800),
 
 INSERT INTO person (id, name, location, birth_date)
 VALUES (10001, 'Michael', 'Frankfurt', sysdate()),
-       (10002, 'Philipp', 'Offenbach', sysdate())
+       (10002, 'Philipp', 'Offenbach', sysdate()),
        (10003, 'David', 'Munich', sysdate());

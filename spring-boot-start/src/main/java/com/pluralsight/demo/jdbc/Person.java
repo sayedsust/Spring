@@ -2,13 +2,23 @@ package com.pluralsight.demo.jdbc;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+
+
+@Entity
+@NamedQuery(name="find_all_persons", query="select p from Person p")
 public class Person {
+
+    @Id
     private int id;
     private String name;
     private String location;
     private Date birthDate;
 
-    public Person(){
+    public Person() {
+
     }
 
     public Person(int id, String name, String location, Date birthDate) {
