@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.pluralsight.demo</groupId>
-    <artifactId>spring-boot-start</artifactId>
+    <artifactId>spring-boot-jpa</artifactId>
     <version>1.0.1</version>
-    <name>spring-boot-start</name>
+    <name>spring-boot-jpa</name>
     <description>Spring boot basic application</description>
 
     <properties>
