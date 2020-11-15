@@ -37,7 +37,7 @@ public class ShopConfig implements WebMvcConfigurer{
         InternalResourceViewResolver bean = new InternalResourceViewResolver();
         bean.setPrefix("/WEB-INF/jsp/");
         bean.setSuffix(".jsp");
-        bean.setOrder(1);
+        bean.setOrder(0);
         return bean;
     }
 
@@ -64,7 +64,7 @@ public class ShopConfig implements WebMvcConfigurer{
     public ViewResolver thymeleafResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
-        viewResolver.setOrder(0);
+        viewResolver.setOrder(1);
         return viewResolver;
     }
 
