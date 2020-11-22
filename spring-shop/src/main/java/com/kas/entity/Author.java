@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -60,8 +61,8 @@ public class Author implements Serializable {
         return this;
     }
 
-    public String getName() {
-        return name;
+    public Optional<String> getName() {
+        return Optional.ofNullable(name);
     }
 
     public Author setName(String name) {
@@ -69,8 +70,8 @@ public class Author implements Serializable {
         return this;
     }
 
-    public String getGenre() {
-        return genre;
+    public Optional<String> getGenre() {
+        return Optional.ofNullable(genre);
     }
 
     public Author setGenre(String genre) {

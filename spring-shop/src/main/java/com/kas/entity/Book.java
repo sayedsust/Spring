@@ -1,6 +1,7 @@
 package com.kas.entity;
 
 import java.io.Serializable;
+import java.util.Optional;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,8 +35,8 @@ public class Book implements Serializable {
         return this;
     }
 
-    public String getTitle() {
-        return title;
+    public Optional<String> getTitle() {
+        return Optional.ofNullable(title);
     }
 
     public Book setTitle(String title) {
@@ -43,8 +44,8 @@ public class Book implements Serializable {
         return this;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public Optional<String> getIsbn() {
+        return Optional.ofNullable(isbn);
     }
 
     public Book setIsbn(String isbn) {
@@ -52,13 +53,12 @@ public class Book implements Serializable {
         return this;
     }
 
-    public Author getAuthor() {
-        return author;
+    public Optional<Author> getAuthor() {
+        return Optional.ofNullable(author);
     }
 
-    public Book setAuthor(Author author) {
+    public void setAuthor(Author author) {
         this.author = author;
-        return this;
     }
 
     @Override

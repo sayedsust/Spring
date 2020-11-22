@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookstoreService {
@@ -43,28 +44,30 @@ public class BookstoreService {
     @Transactional
     public void addBookToAuthor() {
         // behind getOne() we have EntityManager#getReference()
-        Author proxy = authorRepository.getOne(1L);
+        Optional<Author> proxy = Optional.of(authorRepository.getOne(1L));
+        if (proxy.isPresent()){
+            Book book = new Book();
+            book.setIsbn("001-MJ");
+            book.setTitle("The Canterbury Anthology");
+            book.setAuthor(proxy.get());
 
-        Book book = new Book();
-        book.setIsbn("001-MJ");
-        book.setTitle("The Canterbury Anthology");
-        book.setAuthor(proxy);
-
-        bookRepository.save(book);
+            bookRepository.save(book);
+        }
     }
 
     @Transactional
     public void insertNewBook() {
-        Author author = authorRepository.getOne(4L);
+        Optional<Author> author = Optional.of(authorRepository.getOne(4L));
         // or, less efficient since a SELECT is triggered
         // Author author = authorRepository.findByName("Joana Nimar");
+        if (author.isPresent()){
+            Book book = new Book();
+            book.setIsbn("003-JN");
+            book.setTitle("History Of Present");
+            book.setAuthor(author.get());
+            bookRepository.save(book);
+        }
 
-        Book book = new Book();
-        book.setIsbn("003-JN");
-        book.setTitle("History Of Present");
-        book.setAuthor(author);
-
-        bookRepository.save(book);
     }
 
     public void fetchBooksOfAuthorById() {
@@ -80,41 +83,33 @@ public class BookstoreService {
         books.get().forEach(System.out::println);
     }
 
-    @Transactional
-    public void fetchBooksOfAuthorByIdAndAddNewBook() {
-        List<Book> books = bookRepository.fetchBooksOfAuthorById(4L);
-
-        Book book = new Book();
-        book.setIsbn("004-JN");
-        book.setTitle("History Facts");
-        book.setAuthor(books.get(0).getAuthor());
-
-        books.add(bookRepository.save(book));
-
-        System.out.println(books);
-    }
 
     @Transactional(readOnly = true)
     public void displayAuthorWithBooks() {
 
-        Author author = authorRepository.findByName("Joana Nimar");
+        Optional<Author> author = authorRepository.findByName("Joana Nimar");
+        if (author.isPresent()){
+            System.out.println(author + "  Books: " + author.get().getBooks());
+        }
 
-        System.out.println(author + "  Books: " + author.getBooks());
     }
 
     @Transactional
     public void deleteBookOfAuthor() {
 
-        Author author = authorRepository.findByName("Alicia Tom");
-        Book book = author.getBooks().get(0);
-
-        author.removeBook(book); // use removeBook() helper        
+        Optional<Author> author = authorRepository.findByName("Alicia Tom");
+        if (author.isPresent()){
+            Book book = author.get().getBooks().get(0);
+            author.get().removeBook(book); // use removeBook() helper
+        }
     }
 
     @Transactional
     public void deleteAllBooksOfAuthor() {
-        Author author = authorRepository.findByName("Joana Nimar");
-        author.removeBooks(); // use removeBooks() helper    
+        Optional<Author> author = authorRepository.findByName("Joana Nimar");
+        if (author.isPresent()){
+            author.get().removeBooks(); // use removeBooks() helper
+        }
     }
 
     @Transactional
