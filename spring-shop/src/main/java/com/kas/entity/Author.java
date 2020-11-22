@@ -28,14 +28,16 @@ public class Author implements Serializable {
             mappedBy = "author", orphanRemoval = true)
     private List<Book> books = new ArrayList<>();
 
-    public void addBook(Book book) {
+    public Author addBook(Book book) {
         this.books.add(book);
         book.setAuthor(this);
+        return this;
     }
 
-    public void removeBook(Book book) {
+    public Author removeBook(Book book) {
         book.setAuthor(null);
         this.books.remove(book);
+        return this;
     }
 
     public void removeBooks() {
@@ -53,40 +55,45 @@ public class Author implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    public Author setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Author setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public Author setGenre(String genre) {
         this.genre = genre;
+        return this;
     }  
 
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public Author setAge(int age) {
         this.age = age;
+        return this;
     }
 
     public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<Book> books) {
+    public Author setBooks(List<Book> books) {
         this.books = books;
+        return this;
     }
 
     @Override

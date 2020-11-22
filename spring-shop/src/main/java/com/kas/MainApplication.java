@@ -24,23 +24,19 @@ public class MainApplication {
         return args -> {
             System.out.println("\nInsert author with books  ...");
             System.out.println("---------------------------------------------");
-            bookstoreService.insertAuthorWithBooks();
+            bookstoreService.persistAuthorWithBooks();
+            System.out.println("---------------------------------------------");
+
+            System.out.println("\nDisplay book to an author ...");
+            System.out.println("---------------------------------------------");
+            bookstoreService.displayAuthorWithBooks();
             System.out.println("---------------------------------------------");
 
             System.out.println("\nInsert new book to an author ...");
             System.out.println("---------------------------------------------");
-            bookstoreService.insertNewBook();
+            bookstoreService.addBookToAuthor();
             System.out.println("---------------------------------------------");
 
-            System.out.println("\nDelete a book of an author...");
-            System.out.println("---------------------------------------------");
-            bookstoreService.deleteBookOfAuthor();
-            System.out.println("---------------------------------------------");
-            
-            System.out.println("\nDelete all book of an author...");
-            System.out.println("---------------------------------------------");
-            bookstoreService.deleteAllBooksOfAuthor();
-            System.out.println("---------------------------------------------");
 
 
         };

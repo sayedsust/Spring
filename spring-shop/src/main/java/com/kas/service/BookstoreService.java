@@ -4,8 +4,13 @@ import com.kas.entity.Author;
 import com.kas.entity.Book;
 import com.kas.repository.AuthorRepository;
 import com.kas.repository.BookRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class BookstoreService {
@@ -19,20 +24,33 @@ public class BookstoreService {
         this.bookRepository = bookRepository;
     }
 
-    public void insertAuthorWithBooks() {
+    public void persistAuthorWithBooks() {
 
-        Author author = new Author();
-        author.setName("Alicia Tom");
-        author.setAge(38);
-        author.setGenre("Anthology");
-
-        Book book = new Book();
-        book.setIsbn("001-AT");
-        book.setTitle("The book of swords");
-
-        author.addBook(book); // use addBook() helper
+        Author author = new Author()
+                .setName("Joana Nimar")
+                .setAge(34)
+                .setGenre("History")
+                .addBook(new Book()
+                        .setTitle("A History of Ancient Prague")
+                        .setIsbn("001-JN"))
+                .addBook(new Book()
+                        .setTitle("A People's History")
+                        .setIsbn("002-JN"));
 
         authorRepository.save(author);
+    }
+
+    @Transactional
+    public void addBookToAuthor() {
+        // behind getOne() we have EntityManager#getReference()
+        Author proxy = authorRepository.getOne(1L);
+
+        Book book = new Book();
+        book.setIsbn("001-MJ");
+        book.setTitle("The Canterbury Anthology");
+        book.setAuthor(proxy);
+
+        bookRepository.save(book);
     }
 
     @Transactional
@@ -49,10 +67,45 @@ public class BookstoreService {
         bookRepository.save(book);
     }
 
+    public void fetchBooksOfAuthorById() {
+        List<Book> books = bookRepository.fetchBooksOfAuthorById(4L);
+
+        System.out.println(books);
+    }
+
+    public void fetchPageBooksOfAuthorById() {
+        Page<Book> books = bookRepository.fetchPageBooksOfAuthorById(4L,
+                PageRequest.of(0, 2, Sort.by(Sort.Direction.ASC, "title")));
+
+        books.get().forEach(System.out::println);
+    }
+
+    @Transactional
+    public void fetchBooksOfAuthorByIdAndAddNewBook() {
+        List<Book> books = bookRepository.fetchBooksOfAuthorById(4L);
+
+        Book book = new Book();
+        book.setIsbn("004-JN");
+        book.setTitle("History Facts");
+        book.setAuthor(books.get(0).getAuthor());
+
+        books.add(bookRepository.save(book));
+
+        System.out.println(books);
+    }
+
+    @Transactional(readOnly = true)
+    public void displayAuthorWithBooks() {
+
+        Author author = authorRepository.findByName("Joana Nimar");
+
+        System.out.println(author + "  Books: " + author.getBooks());
+    }
+
     @Transactional
     public void deleteBookOfAuthor() {
 
-        Author author = authorRepository.fetchByName("Alicia Tom");
+        Author author = authorRepository.findByName("Alicia Tom");
         Book book = author.getBooks().get(0);
 
         author.removeBook(book); // use removeBook() helper        
@@ -60,8 +113,17 @@ public class BookstoreService {
 
     @Transactional
     public void deleteAllBooksOfAuthor() {
-        Author author = authorRepository.fetchByName("Joana Nimar");
+        Author author = authorRepository.findByName("Joana Nimar");
         author.removeBooks(); // use removeBooks() helper    
+    }
+
+    @Transactional
+    public void fetchBooksOfAuthorByIdAndDeleteFirstBook() {
+        List<Book> books = bookRepository.fetchBooksOfAuthorById(4L);
+
+        bookRepository.delete(books.remove(0));
+
+        System.out.println(books);
     }
 
 }

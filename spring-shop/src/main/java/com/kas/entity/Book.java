@@ -29,32 +29,36 @@ public class Book implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    public Book setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public Book setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(String isbn) {
+    public Book setIsbn(String isbn) {
         this.isbn = isbn;
+        return this;
     }
 
     public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(Author author) {
+    public Book setAuthor(Author author) {
         this.author = author;
+        return this;
     }
 
     @Override
@@ -64,7 +68,7 @@ public class Book implements Serializable {
             return true;
         }
         
-        if (obj == null) {
+        if (!(obj instanceof Book)) {
             return false;
         }
         
