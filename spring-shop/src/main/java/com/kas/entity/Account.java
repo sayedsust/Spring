@@ -1,9 +1,16 @@
 package com.kas.entity;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+@Entity
+@Table(name = "accounts")
 public class Account {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotNull
     @NotEmpty

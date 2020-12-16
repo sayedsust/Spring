@@ -37,7 +37,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .loginProcessingUrl("/perform_login")
+                .failureUrl("/login?error=true")
                 .permitAll()
+                .defaultSuccessUrl("/", true)
 
                 .and()
                 .logout()
@@ -56,7 +59,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder());
-
     }
     @Bean
     public PasswordEncoder passwordEncoder() {

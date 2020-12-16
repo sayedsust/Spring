@@ -1,6 +1,5 @@
 package com.kas.pub.shop;
 
-import com.kas.entity.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,7 +12,7 @@ public class HomeController {
         return "home";
     }
     @GetMapping("/")
-    public String showSignUpForm(User user) {
+    public String showSignUpForm() {
         return "homeNotSignedIn";
     }
 }

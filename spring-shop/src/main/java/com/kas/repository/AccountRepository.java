@@ -1,25 +1,13 @@
 package com.kas.repository;
 
-import com.kas.entity.Account;
-import com.kas.entity.ConferenceUserDetails;
-import com.kas.entity.VerificationToken;
+import com.kas.entity.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
+public interface AccountRepository extends JpaRepository<Account, Long> {
 
-public interface AccountRepository {
-    public Account create (@Valid Account account);
-
-    void saveToken(VerificationToken verificationToken);
-
-    VerificationToken findByToken(String token);
-
-    Account findByUsername(String username);
-
-    void createUserDetails(ConferenceUserDetails userDetails);
-
-    void createAuthorities(ConferenceUserDetails userDetails);
-
-    void delete(Account account);
-
-    void deleteToken(String token);
+    @Transactional(readOnly = true)
+    @Query("SELECT a FROM Account a WHERE a.username = :name")
+    Account findByUsername(String name);
 }

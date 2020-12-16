@@ -42,7 +42,10 @@ public class AccountController {
         //should verify valid email address
 
         //encrypt password
-        account.setPassword(encoder.encode(account.getPassword()));
+        System.out.println("password entered "+account.getPassword());
+        String tmp = encoder.encode(account.getPassword());
+        System.out.println("password encoded" + tmp);
+        account.setPassword(tmp);
 
         //create the account
         account = accountService.create(account);

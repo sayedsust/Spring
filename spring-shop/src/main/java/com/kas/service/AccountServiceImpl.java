@@ -1,9 +1,10 @@
 package com.kas.service;
 
 import com.kas.entity.Account;
-import com.kas.entity.ConferenceUserDetails;
+import com.kas.entity.Authorities;
+import com.kas.entity.Users;
 import com.kas.entity.VerificationToken;
-import com.kas.repository.AccountRepository;
+import com.kas.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,10 +20,16 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private VerificationTokenRepository verificationTokenRepository;
+    @Autowired
+    AuthoritiesRepository authoritiesRepository;
+    @Autowired
+    UsersRepository usersRepository;
 
     @Override
     public Account create(@Valid Account account) {
-        return accountRepository.create(account);
+        return accountRepository.save(account);
     }
 
     @Override
@@ -30,14 +37,15 @@ public class AccountServiceImpl implements AccountService {
         VerificationToken verificationToken = new VerificationToken();
         verificationToken.setToken(token);
         verificationToken.setUsername(account.getUsername());
+        verificationToken.setExpiryDate(verificationToken.calculateExpiryDate(verificationToken.EXPIRATION));
 
-        accountRepository.saveToken(verificationToken);
+        verificationTokenRepository.save(verificationToken);
     }
 
     @Override
     public void confirmAccount(String token) {
         //retrieve token
-        VerificationToken verificationToken = accountRepository.findByToken(token);
+        VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
         //verify date
         if(verificationToken.getExpiryDate().after(new Date())) {
             //move from account table to userdetails table
@@ -46,16 +54,14 @@ public class AccountServiceImpl implements AccountService {
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-            ConferenceUserDetails userDetails =
-                    new ConferenceUserDetails(account.getUsername(),
-                            account.getPassword(),
-                            authorities);
-            accountRepository.createUserDetails(userDetails);
-            accountRepository.createAuthorities(userDetails);
+            Users users = new Users(account.getUsername(), account.getEmail(),account.getPassword(),true);
+
+            usersRepository.save(users);
+            authoritiesRepository.save(new Authorities(account.getUsername(),"ROLE_USER"));
             //delete from accounts
             accountRepository.delete(account);
             //delete from tokens
-            accountRepository.deleteToken(token);
+            verificationTokenRepository.delete(verificationToken);
         }
     }
 }

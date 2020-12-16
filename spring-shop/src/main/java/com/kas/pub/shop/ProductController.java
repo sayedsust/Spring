@@ -1,7 +1,6 @@
 package com.kas.pub.shop;
 
 import com.kas.entity.Product;
-import com.kas.entity.User;
 import com.kas.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
