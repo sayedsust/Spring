@@ -33,8 +33,8 @@ public class ShopConfig implements WebMvcConfigurer{
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/files/**")
-                .addResourceLocations("/WEB-INF/pdf/");
+        registry.addResourceHandler("/resources/**", "/css/**")
+                .addResourceLocations("/WEB-INF/resources/", "/WEB-INF/css/");
     }
 
     @Bean
