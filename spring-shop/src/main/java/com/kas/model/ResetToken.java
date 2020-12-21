@@ -1,20 +1,16 @@
-package com.kas.entity;
+package com.kas.model;
 
-import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 
-@Entity
-@Table(name = "verification_tokens")
-public class VerificationToken {
+public class ResetToken {
+
     public static final int EXPIRATION = 60 * 24;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
     private String token;
-    private String username;
     private String email;
     private Date expiryDate;
+    private String username;
 
     public String getToken() {
         return token;
@@ -24,12 +20,12 @@ public class VerificationToken {
         this.token = token;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Date getExpiryDate() {
@@ -40,12 +36,12 @@ public class VerificationToken {
         this.expiryDate = expiryDate;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Date calculateExpiryDate(int expiryTimeInMinutes) {

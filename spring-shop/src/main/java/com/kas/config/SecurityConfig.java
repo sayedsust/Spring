@@ -32,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/anonymous*").anonymous()
                 .antMatchers("/", "/home*").permitAll()
                 .antMatchers("/account*").permitAll()
+                .antMatchers("/password*").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .anyRequest().authenticated()
 
