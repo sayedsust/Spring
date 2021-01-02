@@ -23,6 +23,13 @@ public class ProductController {
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
+
+    @GetMapping("/allProduct")
+    public String showAllProduct(Model model) {
+        model.addAttribute("products", productRepository.findAll());
+        return "productList";
+    }
+
     @GetMapping("/formCreateProduct")
     public String showProductCreateForm(Product product) {
         return "add-product";

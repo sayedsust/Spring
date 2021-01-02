@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+    <div class="card mb-4" th:fragment="productList">
+        <div class="card-header">
+            <i class="fas fa-table mr-1"></i>
+            DataTable Example
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Entry Date</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="product : ${products}">
+                            <td th:text="${product.name}"></td>
+                            <td th:text="${product.price}"></td>
+                            <td th:text="${product.description}"></td>
+                            <td>61</td>
+                            <td><a th:href="@{/product/edit/{id}(id=${product.id})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+                            <td><a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="my-5"><a th:href="@{/product/formCreateProduct}" class="btn btn-primary"><i class="fas fa-user-plus ml-2"></i></a></p>
+        </div>
+    </div>
+
+</body>
+</html>

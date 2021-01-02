@@ -1,43 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Users</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/shards.min.css">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="adminfragments/header.html :: header">
+    <title>Admin</title>
 </head>
-<body>
-<div th:switch="${products}" class="container my-5">
-    <div class="row">
-        <div class="col-md-6">
-            <h2 th:case="null">No products yet!</h2>
-            <div th:case="*">
-                <h2 class="my-5">Products</h2>
-                <table class="table table-striped table-responsive-md">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="product : ${products}">
-                        <td th:text="${product.name}"></td>
-                        <td th:text="${product.price}"></td>
-                        <td><a th:href="@{/product/edit/{id}(id=${product.id})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-                        <td><a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
-                    </tr>
-                    </tbody>
-                </table>
+<body class="sb-nav-fixed">
+<div th:replace="adminfragments/sidenav.html :: navbar"> </div>
+<div id="layoutSidenav">
+    <div th:replace="adminfragments/sidenav.html :: sidenav"> </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Product List</h1>
+                <div th:replace="adminfragments/productList.html :: productList"> </div>
             </div>
-            <p class="my-5"><a href="/product/formCreateProduct" class="btn btn-primary"><i class="fas fa-user-plus ml-2"></i></a></p>
-        </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+            <div th:replace="adminfragments/footer.html :: footer"> </div>
+        </footer>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="assets/demo/chart-area-demo.js"></script>
+<script src="assets/demo/chart-bar-demo.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+<script src="assets/demo/datatables-demo.js"></script>
 </body>
 </html>

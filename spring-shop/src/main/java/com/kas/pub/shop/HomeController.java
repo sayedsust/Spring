@@ -13,6 +13,6 @@ public class HomeController {
     }
     @GetMapping("/")
     public String showSignUpForm() {
-        return "admin-home";
+        return "home";
     }
 }
