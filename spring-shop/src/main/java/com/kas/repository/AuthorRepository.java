@@ -12,34 +12,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.domain.Slice;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AuthorRepository extends PagingAndSortingRepository<Author, Long> {
+public interface AuthorRepository extends JpaRepository<Author, Long> {
 
-    @Transactional(readOnly = true)
-    Optional<Author> findByName(String name);
+    @Query(value = "SELECT * FROM author AS a WHERE a.id < ?1 ORDER BY a.id DESC LIMIT ?2",nativeQuery = true)
+    List<Author> fetchAll(long id, int limit);
 
-    @Query("SELECT a FROM Author a WHERE a.genre = ?1")
-    public Page<Author> fetchByGenre(String genre, Pageable pageable);
-
-    @Query(value = "SELECT a FROM Author a WHERE a.genre = ?1", countQuery = "SELECT COUNT(*) FROM Author a WHERE a.genre = ?1")
-    public Page<Author> fetchByGenreExplicitCount(String genre, Pageable pageable);
-
-    @Query(value = "SELECT * FROM author WHERE genre = ?1",nativeQuery = true)
-    public Page<Author> fetchByGenreNative(String genre, Pageable pageable);
-
-    @Query(value = "SELECT * FROM author WHERE genre = ?1", countQuery = "SELECT COUNT(*) FROM author WHERE genre = ?1", nativeQuery = true)
-    public Page<Author> fetchByGenreNativeExplicitCount(String genre, Pageable pageable);
-
-    /*
-    Using Slice API
-     */
-    @Transactional(readOnly = true)
-    @Query(value = "SELECT a FROM Author a")
-    Slice<Author> fetchAll(Pageable pageable);
-
-    @Transactional(readOnly = true)
-    @Query(value = "SELECT a.name as name, a.age as age FROM Author a")
-    Slice<AuthorDto> fetchAllDto(Pageable pageable);
+    @Query(value = "SELECT name, age FROM author AS a WHERE a.id < ?1 ORDER BY a.id DESC LIMIT ?2",nativeQuery = true)
+    List<AuthorDto> fetchAllDto(long id, int limit);
 }
