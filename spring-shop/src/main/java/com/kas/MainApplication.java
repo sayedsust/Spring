@@ -22,21 +22,15 @@ public class MainApplication {
     @Bean
     public ApplicationRunner init() {
         return args -> {
-            System.out.println("\nInsert author with books  ...");
-            System.out.println("---------------------------------------------");
-            bookstoreService.persistAuthorWithBooks();
-            System.out.println("---------------------------------------------");
-
-            System.out.println("\nDisplay book to an author ...");
-            System.out.println("---------------------------------------------");
-            bookstoreService.displayAuthorWithBooks();
-            System.out.println("---------------------------------------------");
-
-            System.out.println("\nInsert new book to an author ...");
-            System.out.println("---------------------------------------------");
-            bookstoreService.addBookToAuthor();
-            System.out.println("---------------------------------------------");
-
+//            System.out.println("\nInsert author with books  ...");
+//            System.out.println("---------------------------------------------");
+//            bookstoreService.persistAuthorWithBooks();
+//            System.out.println("---------------------------------------------");
+//
+//            System.out.println("\nDisplay book to an author ...");
+//            System.out.println("---------------------------------------------");
+//            bookstoreService.displayAuthorWithBooks();
+//            System.out.println("---------------------------------------------");
 
 
         };

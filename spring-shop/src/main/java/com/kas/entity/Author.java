@@ -1,5 +1,7 @@
 package com.kas.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,6 +29,7 @@ public class Author implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL,
             mappedBy = "author", orphanRemoval = true)
+    @JsonIgnore
     private List<Book> books = new ArrayList<>();
 
     public Author addBook(Book book) {

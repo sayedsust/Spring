@@ -1,5 +1,6 @@
 package com.kas.service;
 
+import com.kas.dto.AuthorDto;
 import com.kas.entity.Author;
 import com.kas.entity.Book;
 import com.kas.repository.AuthorRepository;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,50 +28,17 @@ public class BookstoreService {
         this.bookRepository = bookRepository;
     }
 
-    public void persistAuthorWithBooks() {
-
-        Author author = new Author()
-                .setName("Joana Nimar")
-                .setAge(34)
-                .setGenre("History")
-                .addBook(new Book()
-                        .setTitle("A History of Ancient Prague")
-                        .setIsbn("001-JN"))
-                .addBook(new Book()
-                        .setTitle("A People's History")
-                        .setIsbn("002-JN"));
-
-        authorRepository.save(author);
-    }
-
-    @Transactional
-    public void addBookToAuthor() {
-        // behind getOne() we have EntityManager#getReference()
-        Optional<Author> proxy = Optional.of(authorRepository.getOne(1L));
-        if (proxy.isPresent()){
-            Book book = new Book();
-            book.setIsbn("001-MJ");
-            book.setTitle("The Canterbury Anthology");
-            book.setAuthor(proxy.get());
-
-            bookRepository.save(book);
-        }
-    }
-
-    @Transactional
-    public void insertNewBook() {
-        Optional<Author> author = Optional.of(authorRepository.getOne(4L));
-        // or, less efficient since a SELECT is triggered
-        // Author author = authorRepository.findByName("Joana Nimar");
-        if (author.isPresent()){
-            Book book = new Book();
-            book.setIsbn("003-JN");
-            book.setTitle("History Of Present");
-            book.setAuthor(author.get());
-            bookRepository.save(book);
-        }
-
-    }
+//    public void persistAuthorWithBooks() {
+//
+//        Author author = new Author()
+//                .setName("Joana Nimar")
+//                .setAge(34)
+//                .setGenre("History")
+//                .addBook(new Book().setTitle("A History of Ancient Prague").setIsbn("001-JN"))
+//                .addBook(new Book().setTitle("A People's History").setIsbn("002-JN"));
+//
+//        authorRepository.save(author);
+//    }
 
     public void fetchBooksOfAuthorById() {
         List<Book> books = bookRepository.fetchBooksOfAuthorById(4L);
@@ -120,5 +90,49 @@ public class BookstoreService {
 
         System.out.println(books);
     }
+    public Page<Author> fetchNextPage(int page, int size) {
 
+        return authorRepository.findAll(PageRequest.of(page, size,Sort.by(Sort.Direction.ASC, "age")));
+    }
+
+    public Page<Author> fetchNextPageByGenre(int page, int size) {
+
+        return authorRepository.fetchByGenre("History",
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "age")));
+    }
+
+    public Page<Author> fetchNextPageByGenreExplicitCount(int page, int size) {
+
+        return authorRepository.fetchByGenreExplicitCount("History",
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "age")));
+    }
+
+    public Page<Author> fetchNextPageByGenreNative(int page, int size) {
+
+        return authorRepository.fetchByGenreNative("History",
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "age")));
+    }
+
+    public Page<Author> fetchNextPageByGenreNativeExplicitCount(int page, int size) {
+
+        return authorRepository.fetchByGenreNativeExplicitCount("History",
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "age")));
+    }
+
+    public Page<Author> fetchNextPagePageable(Pageable pageable) {
+
+        return authorRepository.findAll(pageable);
+    }
+
+    public Slice<Author> fetchNextSlice(int page, int size) {
+
+        return authorRepository.fetchAll(PageRequest.of(page, size,
+                Sort.by(Sort.Direction.ASC, "age")));
+    }
+
+    public Slice<AuthorDto> fetchNextSliceDto(int page, int size) {
+
+        return authorRepository.fetchAllDto(PageRequest.of(page, size,
+                Sort.by(Sort.Direction.ASC, "age")));
+    }
 }
