@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/anonymous*").anonymous()
                 .antMatchers("/", "/home*").permitAll()
-                .antMatchers("/account*","/product/**","/authors*","/authors/**").permitAll()
+                .antMatchers("/account*","/product/**","/authors*","/authors/**","/cart/**","/book/**").permitAll()
                 .antMatchers("/password*").permitAll()
                 .antMatchers("/admin*").permitAll()
                 .antMatchers("/css/**","/js/**").permitAll()

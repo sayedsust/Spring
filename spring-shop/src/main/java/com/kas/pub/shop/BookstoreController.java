@@ -1,42 +1,42 @@
 package com.kas.pub.shop;
 
-import com.kas.dto.AuthorDto;
 import com.kas.entity.Author;
-import com.kas.model.AuthorView;
-import com.kas.model.AuthorViewDto;
+import com.kas.repository.BookRepository;
 import com.kas.service.BookstoreService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.data.domain.Slice;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-@RestController
+@Controller
 public class BookstoreController {
 
-    private final BookstoreService bookstoreService;
+    @Autowired
+    private BookRepository bookRepository;
+    @Autowired
+    private  BookstoreService bookstoreService;
 
-    public BookstoreController(BookstoreService bookstoreService) {
-        this.bookstoreService = bookstoreService;
-    }
 
-    /*
-    Keyset Pagination
-     */
-    @GetMapping("/authors/{id}/{limit}")
-    public AuthorView fetchAuthors(@PathVariable long id, @PathVariable int limit) {
-
-        return bookstoreService.fetchNextPage(id, limit);
-    }
-
-    @GetMapping("/dto/authors/{id}/{limit}")
-    public AuthorViewDto fetchAuthorsDto(@PathVariable long id, @PathVariable int limit) {
-
-        return bookstoreService.fetchNextPageDto(id, limit);
-    }
+//    /*
+//    Keyset Pagination
+//     */
+//    @GetMapping("/authors/{id}/{limit}")
+//    public AuthorView fetchAuthors(@PathVariable long id, @PathVariable int limit) {
+//
+//        return bookstoreService.fetchNextPage(id, limit);
+//    }
+//
+//    @GetMapping("/dto/authors/{id}/{limit}")
+//    public AuthorViewDto fetchAuthorsDto(@PathVariable long id, @PathVariable int limit) {
+//
+//        return bookstoreService.fetchNextPageDto(id, limit);
+//    }
     /*
     Slice API
      */
@@ -55,11 +55,32 @@ public class BookstoreController {
     /*
     Paging API
      */
-//    @GetMapping("/authors/{page}/{size}")
-//    public Page<Author> fetchAuthors(@PathVariable int page, @PathVariable int size) {
-//
-//        return bookstoreService.fetchNextPage(page, size);
-//    }
+    @GetMapping("/authors/{page}/{size}")
+    public String fetchAuthors(Model model, @PathVariable int page, @PathVariable int size) {
+
+        final int currentPage = page;
+        final int pageSize = size;
+
+        Page<Author> authorPage = bookstoreService.fetchNextPage(page, size);
+
+        model.addAttribute("authorPage", authorPage);
+
+        int totalPages = authorPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        return "home";
+    }
+
+    @GetMapping("/book/{id}")
+    public String showProductDetails(@PathVariable long id, Model model){
+        model.addAttribute("book",bookRepository.findById(id).get());
+        return "product-detail";
+    }
 
 //    @GetMapping("/authorsByGenre/{page}/{size}")
 //    public Page<Author> fetchAuthorsByGenre(@PathVariable int page, @PathVariable int size) {

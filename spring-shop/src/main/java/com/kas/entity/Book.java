@@ -1,6 +1,7 @@
 package com.kas.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Optional;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,6 +22,8 @@ public class Book implements Serializable {
 
     private String title;
     private String isbn;
+    private BigDecimal price;
+    private String desscription;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
@@ -59,6 +62,22 @@ public class Book implements Serializable {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getDesscription() {
+        return desscription;
+    }
+
+    public void setDesscription(String desscription) {
+        this.desscription = desscription;
     }
 
     @Override

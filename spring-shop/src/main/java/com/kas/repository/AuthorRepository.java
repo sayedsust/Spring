@@ -16,11 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AuthorRepository extends JpaRepository<Author, Long> {
+public interface AuthorRepository extends PagingAndSortingRepository<Author, Long> {
 
-    @Query(value = "SELECT * FROM author AS a WHERE a.id < ?1 ORDER BY a.id DESC LIMIT ?2",nativeQuery = true)
-    List<Author> fetchAll(long id, int limit);
 
-    @Query(value = "SELECT name, age FROM author AS a WHERE a.id < ?1 ORDER BY a.id DESC LIMIT ?2",nativeQuery = true)
-    List<AuthorDto> fetchAllDto(long id, int limit);
 }

@@ -68,25 +68,9 @@ public class BookstoreService {
         return authorRepository.findAll(PageRequest.of(page, size,Sort.by(Sort.Direction.ASC, "age")));
     }
 
-    public AuthorView fetchNextPage(long id, int limit) {
-        List<Author> authors = authorRepository.fetchAll(id, limit + 1);
+    public Page<Book> fetchNexBooktPage(int page, int size) {
 
-        if (authors.size() == (limit + 1)) {
-            authors.remove(authors.size() - 1);
-            return new AuthorView(authors, false);
-        }
-
-        return new AuthorView(authors, true);
+        return bookRepository.findAll(PageRequest.of(page, size,Sort.by(Sort.Direction.ASC, "title")));
     }
 
-    public AuthorViewDto fetchNextPageDto(long id, int limit) {
-        List<AuthorDto> authors = authorRepository.fetchAllDto(id, limit + 1);
-
-        if (authors.size() == (limit + 1)) {
-            authors.remove(authors.size() - 1);
-            return new AuthorViewDto(authors, false);
-        }
-
-        return new AuthorViewDto(authors, true);
-    }
 }
