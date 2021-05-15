@@ -8,7 +8,7 @@
 -
 -
 
-# 01 Spring-boot + Spring-data-jpa + MySql 1.0 / H2 inmemory
+# 01 Spring-boot + Spring-data-jpa + MySql / H2 inmemory
 - Get all tickets with rest request
 GET method ~ http://localhost:8080/ticket/getTickets
 - Create multiple tickets
@@ -20,6 +20,10 @@ POST method ~ http://localhost:8080/ticket/
 
 H2 database available: http://localhost:8080/h2-console
 
-# 02 Spring-boot + Hibernate + MySql 1 + thymeleaf CRUD
+# 02 Spring-boot + Hibernate + MySql / H2 inmemory
 
-# 
+
+
+# 03 Spring-boot + Spring-data-jpa + MySql + thymeleaf CRUD
+
+create user / update / delete user with Thymeleaf
