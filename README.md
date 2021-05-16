@@ -37,5 +37,7 @@ http://localhost:8080/rest/userpath/getMsg ~ accessible for autheticated user
 # 05 Spring-boot + Spring Security + Authetication against JPA + Spring login page
 05SpringSecurityJpaSpringLoginPage
 
-# 05 Spring-boot + Spring Security + Authetication against JPA + Registration + Custom Login Page + Admin login Area
+# 07 Spring-boot + Spring Security + Authetication against JPA + Registration + Custom Login Page + Admin login Area
+
+# 08 Spring boot + Spring Security + JWT
 
