@@ -37,7 +37,16 @@ http://localhost:8080/rest/userpath/getMsg ~ accessible for autheticated user
 # 05 Spring-boot + Spring Security + Authetication against JPA + Spring login page
 05SpringSecurityJpaSpringLoginPage
 
-# 07 Spring-boot + Spring Security + Authetication against JPA + Registration + Custom Login Page + Admin login Area
+# 06 Spring-boot + Spring Security + Authetication against JPA + Registration + Custom Login Page + Admin login Area
 
-# 08 Spring boot + Spring Security + JWT
+# 07 Spring boot + Spring Security + JWT
+
+GET JWT Token: http://localhost:8080/autheticate with POST request
+
+{
+    "username":"javainuse",
+    "password":"password"
+}
+
+GET request : http://localhost:8080/hello
 
