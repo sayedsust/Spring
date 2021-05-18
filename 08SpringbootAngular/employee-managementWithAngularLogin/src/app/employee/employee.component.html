@@ -1,0 +1,14 @@
+<table border="1">
+    <thead>
+        <th>name</th>
+        <th>designation</th>
+        <th>delete</th>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let employee of employees">
+            <td>{{employee.name}}</td>
+            <td>{{employee.designation}}</td>
+            <td><button class="btn btn-danger" (click)="deleteEmployee(employee)">{{employee.empId}} </button></td>
+        </tr>
+    </tbody>
+</table>
