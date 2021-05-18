@@ -33,7 +33,7 @@ SpringSecurity with Jpa and SpringLoginPage
 
 # 06 Spring-boot + Spring Security + Authetication against JPA + Registration + Custom Login Page + Admin login Area
 
-# 07 Spring boot + Spring Security + JWT
+# 07 Spring boot + Spring Security + JWT ~ https://www.javainuse.com/spring/boot-jwt
 
 GET JWT Token: http://localhost:8080/autheticate with POST request
 
@@ -45,8 +45,31 @@ GET JWT Token: http://localhost:8080/autheticate with POST request
 GET request : http://localhost:8080/hello
 
 # 08 Spring boot + Angular CRUD
+Empleyee Create / Delete / show
 
-# 09 Spring boot + Spring Security Login
+# 09 Spring boot + Spring JWT Authetication ~ https://bezkoder.com/angular-spring-boot-jwt-auth/
+Insert role into database:
+INSERT INTO roles(name) VALUES('ROLE_USER');
+INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
+INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+
+POST request create user: http://localhost:8080/api/auth/signup
+{
+    "username":"mod",
+    "email":"sa@gma.com",
+    "password":"password",
+    "role" : ["mod","user"]
+}
+
+POST signin request: http://localhost:8080/api/auth/signin
+{
+    "username":"mod",
+    "password":"password"
+}
+
+GET request with Bearer token: http://localhost:8080/api/test/user
+
+#10 Spring boot + 
 
 
 
